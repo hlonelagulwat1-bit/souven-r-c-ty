@@ -1,0 +1,1116 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE SOUVENIR CITY: Galata &amp; Karaköy</title>
+    <style>
+        :root {
+            --bg-color: #f3f3f3;
+            --grid-color: #dcdcdc;
+            --crimson: #a81c1c;
+            --dark-crimson: #7a1212;
+            --paper: #fdfdfd;
+            --border-dark: #222222;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(var(--grid-color) 1.5px, transparent 1.5px),
+                radial-gradient(var(--grid-color) 1.5px, var(--bg-color) 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--border-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            filter: grayscale(100%) contrast(110%);
+        }
+
+        .abstract-box {
+            width: 95%;
+            max-width: 1260px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 2px solid var(--border-dark);
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            font-size: 0.78rem;
+            line-height: 1.6;
+            text-align: justify;
+            z-index: 10;
+        }
+
+        .abstract-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px dashed var(--border-dark);
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+        .abstract-box h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 0;
+            color: var(--crimson);
+        }
+
+        .group-members {
+            font-size: 0.72rem;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .abstract-box .keywords {
+            margin-top: 12px;
+            font-size: 0.72rem;
+            font-style: italic;
+            color: #444;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+            color: #444;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .btn-crimson {
+            background-color: var(--crimson);
+            color: white;
+            border: 2px solid var(--border-dark);
+            padding: 8px 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            transition: transform 0.1s, box-shadow 0.1s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-crimson:hover {
+            background-color: var(--dark-crimson);
+        }
+
+        .btn-crimson:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--border-dark);
+        }
+
+        .board-container {
+            width: 95%;
+            max-width: 1300px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 15px;
+            scroll-behavior: smooth;
+            z-index: 5;
+        }
+
+        .board-container::-webkit-scrollbar {
+            height: 12px;
+        }
+        .board-container::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border: 1px solid var(--border-dark);
+            border-radius: 6px;
+        }
+        .board-container::-webkit-scrollbar-thumb {
+            background: var(--crimson);
+            border: 1px solid var(--border-dark);
+            border-radius: 6px;
+        }
+
+        .main-board {
+            position: relative;
+            width: 1800px;
+            min-height: 620px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 2px dashed var(--border-dark);
+            padding: 30px;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+        }
+
+        .bg-notification-feed {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .live-notification-card {
+            position: absolute;
+            width: 290px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px dashed #777;
+            padding: 10px;
+            font-size: 0.63rem;
+            color: #333;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.06);
+            opacity: 0.55;
+            transition: opacity 0.3s;
+        }
+
+        .live-notification-card:hover {
+            opacity: 0.95;
+        }
+
+        .notif-source {
+            font-weight: bold;
+            color: var(--crimson);
+            text-transform: uppercase;
+            margin-bottom: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .notif-citation {
+            margin-top: 5px;
+            border-top: 1px dotted #ccc;
+            padding-top: 4px;
+            font-size: 0.55rem;
+            color: #555;
+            font-style: italic;
+        }
+
+        .board-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #999;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 0.8rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .clock-box {
+            background: var(--crimson);
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            border: 1px solid var(--border-dark);
+            font-size: 0.85rem;
+        }
+
+        @keyframes ambientWind {
+            0% { transform: scale(var(--item-scale, 1)) rotate(var(--item-rot, 0deg)) translateY(0px); }
+            50% { transform: scale(var(--item-scale, 1)) rotate(calc(var(--item-rot, 0deg) + 1.5deg)) translateY(-4px); }
+            100% { transform: scale(var(--item-scale, 1)) rotate(calc(var(--item-rot, 0deg) - 1.2deg)) translateY(2px); }
+        }
+
+        @keyframes intenseWind {
+            0% { transform: scale(calc(var(--item-scale, 1) * 1.05)) rotate(calc(var(--item-rot, 0deg) + 2.5deg)) translateY(-6px); }
+            50% { transform: scale(calc(var(--item-scale, 1) * 1.08)) rotate(calc(var(--item-rot, 0deg) - 3deg)) translateY(-10px); }
+            100% { transform: scale(calc(var(--item-scale, 1) * 1.06)) rotate(calc(var(--item-rot, 0deg) + 2deg)) translateY(-8px); }
+        }
+
+        .polaroid {
+            position: absolute;
+            background: #fff;
+            padding: 12px 12px 22px 12px;
+            border: 1px solid #ccc;
+            box-shadow: 4px 4px 14px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transform-origin: top center;
+            animation: ambientWind 4.5s infinite ease-in-out;
+            transition: box-shadow 0.3s ease;
+            box-sizing: border-box;
+            z-index: 20;
+            user-select: none;
+        }
+
+        .polaroid:hover {
+            animation: intenseWind 1.8s infinite ease-in-out alternate;
+            box-shadow: 12px 18px 26px rgba(0,0,0,0.35);
+            z-index: 100;
+        }
+
+        .polaroid::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75px;
+            height: 18px;
+            background: rgba(20, 20, 20, 0.9);
+            border-left: 1px dashed #fff;
+            border-right: 1px dashed #fff;
+            z-index: 2;
+        }
+
+        .polaroid-media {
+            width: 100%;
+            object-fit: cover;
+            background: #000;
+            border: 1px solid #ddd;
+        }
+
+        .recorder-node {
+            position: absolute;
+            background: #fbf9f4;
+            border: 2px solid var(--border-dark);
+            padding: 12px;
+            box-shadow: 5px 5px 12px rgba(0,0,0,0.25);
+            width: 250px;
+            box-sizing: border-box;
+            z-index: 25;
+            transform-origin: top center;
+            animation: ambientWind 4s infinite ease-in-out;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .recorder-node:hover {
+            animation: intenseWind 1.8s infinite ease-in-out alternate;
+            z-index: 110;
+        }
+
+        .recorder-graphic {
+            width: 100%;
+            height: 100px;
+            background: #111;
+            border: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #00ff66;
+            font-family: monospace;
+            position: relative;
+        }
+
+        .recorder-tooltip {
+            position: absolute;
+            bottom: 105%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--border-dark);
+            color: #fff;
+            padding: 8px 12px;
+            font-size: 0.65rem;
+            width: 210px;
+            text-align: center;
+            border: 1px solid #fff;
+            display: none;
+            z-index: 200;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .recorder-node:hover .recorder-tooltip {
+            display: block;
+        }
+
+        .polaroid-pdf {
+            width: 100%;
+            background: #fdfaf3;
+            border: 1px dashed var(--crimson);
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pdf-citation-box {
+            font-size: 0.7rem;
+            color: #222;
+            line-height: 1.35;
+            background: #fff;
+            padding: 6px;
+            border-left: 3px solid var(--crimson);
+            margin-top: 5px;
+        }
+
+        .polaroid-caption {
+            font-size: 0.72rem;
+            line-height: 1.25;
+            color: #333;
+            word-break: break-word;
+            margin-top: 4px;
+            border-top: 1px dotted #ddd;
+            padding-top: 6px;
+        }
+
+        .feedback-section-card {
+            background: #f8f6f0;
+            border: 1px dashed #b89b5e;
+            padding: 6px;
+            margin-top: 6px;
+            font-size: 0.65rem;
+            color: #443;
+            line-height: 1.25;
+        }
+
+        .polaroid-meta {
+            font-size: 0.62rem;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .empty-notice {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            z-index: 10;
+        }
+
+        .slider-control-row {
+            width: 95%;
+            max-width: 1300px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .slider-label {
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .board-range-slider {
+            flex-grow: 1;
+            accent-color: var(--crimson);
+            cursor: pointer;
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-top: 10px;
+            z-index: 10;
+        }
+
+        .upload-box {
+            display: inline-block;
+            background: var(--crimson);
+            color: white;
+            border: 2px solid var(--border-dark);
+            padding: 14px 24px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--border-dark);
+            text-transform: uppercase;
+            transition: all 0.1s ease;
+        }
+
+        .upload-box:hover {
+            background: var(--dark-crimson);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .footer-note {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.65);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: var(--paper);
+            border: 3px solid var(--border-dark);
+            width: 90%;
+            max-width: 520px;
+            padding: 25px;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.3);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-card h2 {
+            font-size: 0.95rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--border-dark);
+            padding-bottom: 8px;
+        }
+
+        .modal-card p {
+            font-size: 0.8rem;
+            color: #444;
+        }
+
+        .modal-card textarea, .modal-card input, .modal-card select {
+            width: 100%;
+            border: 2px solid var(--border-dark);
+            padding: 8px 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem;
+            box-sizing: border-box;
+            background: #fff;
+            margin-bottom: 12px;
+        }
+
+        .modal-card textarea {
+            height: 70px;
+            resize: vertical;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        @media print {
+            @page {
+                size: landscape;
+                margin: 10mm;
+            }
+            body {
+                background: #fff !important;
+                filter: none !important;
+                padding: 0 !important;
+            }
+            .top-nav, .slider-control-row, .upload-section, header, .modal-overlay {
+                display: none !important;
+            }
+            .abstract-box {
+                box-shadow: none !important;
+                border: 1px solid #222 !important;
+                margin-bottom: 15px !important;
+                page-break-after: always;
+            }
+            .board-container {
+                overflow: visible !important;
+                width: 100% !important;
+                max-width: none !important;
+                padding: 0 !important;
+            }
+            .main-board {
+                width: 100% !important;
+                border: 1px solid #222 !important;
+                box-shadow: none !important;
+                background: #fff !important;
+                padding: 15px !important;
+            }
+            .polaroid, .recorder-node {
+                animation: none !important;
+                box-shadow: none !important;
+                border: 1px solid #999 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ENTRY GATE: Clarify Local or Visitor -->
+    <div id="entryModal" class="modal-overlay">
+        <div class="modal-card" style="text-align: center; border-color: var(--crimson);">
+            <h2 style="color: var(--crimson);">The Souvenir City: Access Portal</h2>
+            <p style="margin-bottom: 20px; line-height: 1.5;">
+                Welcome to Galata &amp; Karaköy. Before entering the digital archive, please clarify your perspective:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
+                <button class="btn-crimson" onclick="selectUserPersona('Local User')">🏛️ I am a Local User (Resident / Everyday Practice)</button>
+                <button class="btn-crimson" style="background: #333;" onclick="selectUserPersona('Visitor / Tourist')">🧭 I am a Visitor / Tourist</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Abstract Section -->
+    <div class="abstract-box">
+        <div class="abstract-header-row">
+            <h2>Abstract</h2>
+            <div class="group-members">Group Members: Oumayma Belkarroumia, Marwa Hamia, Hlonela Gulwa</div>
+        </div>
+        <p>The route from Galata Tower through the commercial corridors of Yüksek Kaldırım to Karaköy Waterfront reveals different ways of experiencing the city as a souvenir. For visitors, the route can become a memorable experience shaped by tourism, shopping, and the attraction of historical places. For local users, commercial activities may reshape everyday experiences and priorities, yet the waterfront remains a place where people create their own memories through activities such as fishing, sitting, and socializing. Drawing on Carmona and Wunderlich’s Capital Spaces, Guy Debord’s concepts of the spectacle and the dérive, and David Harvey’s Right to the City, this project investigates how commercialization transforms public space and how everyday practices can reclaim its lived value.</p>
+        <div class="keywords"><strong>Keywords:</strong> Souvenir City; Commodification; Dérive; Everyday Memory; Participatory Urban Intervention.</div>
+    </div>
+
+    <header>
+        <h1>A real-time public digital museum for Galata &amp; Karaköy</h1>
+        <div class="top-nav">
+            <span id="currentUserPersona" style="font-size:0.75rem; background:#fff; border:1px solid #222; padding:8px 12px; font-weight:bold; display:flex; align-items:center;">Persona: Not Set</span>
+            <button class="btn-crimson" onclick="copyShareableLink()">📋 Copy Shareable Link</button>
+            <button class="btn-crimson" onclick="triggerUpdateArchive()">💾 Download Horizontal PDF Archive</button>
+        </div>
+    </header>
+
+    <!-- Outer Horizontal Scroll Container -->
+    <div id="boardContainer" class="board-container">
+        <div id="mainBoard" class="main-board" style="width: 1800px;">
+            <div id="bgNotificationFeed" class="bg-notification-feed"></div>
+
+            <div class="board-header-row">
+                <span>What is your souvenir? (Hover &amp; press 'D' or long-press mobile to delete)</span>
+                <span id="live-clock" class="clock-box">11:49 PM</span>
+            </div>
+
+            <div id="souvenirsContainer"><div class="empty-notice">No user souvenirs documented yet. Click the crimson upload button below to begin archiving.</div></div>
+        </div>
+    </div>
+
+    <!-- Timeline & Board Panning Slider -->
+    <div class="slider-control-row">
+        <span class="slider-label">PRESENT</span>
+        <input type="range" id="boardPanSlider" class="board-range-slider" min="0" max="100" value="0" oninput="syncBoardPan(this.value)">
+        <span class="slider-label">PAST ARCHIVE</span>
+    </div>
+
+    <div class="upload-section">
+        <label for="fileInput" class="upload-box">
+            📁 DROP YOUR PICTURE, AUDIO, VIDEO OR PDF
+            <div style="font-size: 0.65rem; margin-top: 4px; font-weight: normal; opacity: 0.9;">Click to upload your souvenir</div>
+        </label>
+        <input type="file" id="fileInput" accept="image/*,video/*,audio/*,.pdf" onchange="handleFileSelected(event)">
+        <div class="footer-note">This archive is the solo property of the public. A product by H.Gulwa, O.Belkarroumia, and M.Hamia.</div>
+    </div>
+
+    <!-- Description & Spatial Feedback Modal Popup -->
+    <div id="commentModal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <h2>Document Your Souvenir &amp; Spatial Critique</h2>
+            <p>Share your experience, specify your location, and provide feedback on the urban space.</p>
+            
+            <div class="input-group">
+                <label for="souvenirLocation">Where are you sharing your experience from?</label>
+                <select id="souvenirLocation">
+                    <option value="Galata Tower & Surroundings">Galata Tower &amp; Surroundings</option>
+                    <option value="Yüksek Kaldırım Corridor">Yüksek Kaldırım Commercial Corridor</option>
+                    <option value="Karaköy Waterfront / Galataport">Karaköy Waterfront / Galataport</option>
+                    <option value="Connecting Alleys / Stepped Streets">Connecting Alleys &amp; Stepped Streets</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="souvenirComment">Reflection / Description of Experience</label>
+                <textarea id="souvenirComment" placeholder="Write your memory, reflection, or story here..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="missingSpace">What is missing from the space?</label>
+                <textarea id="missingSpace" placeholder="e.g. public seating, shade, affordable spaces, greenery..." style="height: 50px;"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="problemsSpace">What problems have you experienced here?</label>
+                <textarea id="problemsSpace" placeholder="e.g. over-commercialization, crowds, accessibility barriers, noise..." style="height: 50px;"></textarea>
+            </div>
+
+            <div id="harvardFields" style="display: none; border-top: 1px dashed #aaa; padding-top: 10px; margin-top: 5px;">
+                <p style="font-weight: bold; color: var(--crimson); font-size: 0.75rem;">PDF DETECTED: HARVARD REFERENCING METADATA</p>
+                <div class="input-group">
+                    <label>Author(s) (e.g. Smith, J. and Gulwa, H.)</label>
+                    <input type="text" id="pdfAuthor" placeholder="Author(s)">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="input-group" style="flex: 1;">
+                        <label>Year of Publication</label>
+                        <input type="text" id="pdfYear" placeholder="2026">
+                    </div>
+                    <div class="input-group" style="flex: 2;">
+                        <label>Document Title</label>
+                        <input type="text" id="pdfTitle" placeholder="Title of document">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Publisher / Institution / URL</label>
+                    <input type="text" id="pdfPublisher" placeholder="e.g. BAU Architecture Press">
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-crimson" style="background:#666;" onclick="closeModal()">Cancel</button>
+                <button class="btn-crimson" onclick="submitSouvenir()">Submit Souvenir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security PIN Verification Modal for Deletion -->
+    <div id="pinModal" class="modal-overlay" style="display: none;">
+        <div class="modal-card" style="border-color: var(--crimson);">
+            <h2 style="color: var(--crimson);">🔒 Security Clearance Required</h2>
+            <p id="pinPromptText" style="font-style: italic; margin-bottom: 15px; border-left: 3px solid var(--crimson); padding-left: 8px;">
+                "Who is to say that isn't one of the multiple dimensions of public space?"
+            </p>
+            <div class="input-group">
+                <label for="securityPinInput">Enter Deletion PIN</label>
+                <input type="password" id="securityPinInput" placeholder="Enter PIN..." maxlength="4">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-crimson" style="background:#666;" onclick="closePinModal()">Abort</button>
+                <button class="btn-crimson" onclick="verifyAndDelete()">Authorize Deletion</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPersona = localStorage.getItem('galata_user_persona') || null;
+
+        function selectUserPersona(persona) {
+            currentPersona = persona;
+            localStorage.setItem('galata_user_persona', persona);
+            document.getElementById('currentUserPersona').innerText = `Persona: ${persona}`;
+            document.getElementById('entryModal').style.display = 'none';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (currentPersona) {
+                document.getElementById('currentUserPersona').innerText = `Persona: ${currentPersona}`;
+                document.getElementById('entryModal').style.display = 'none';
+            } else {
+                document.getElementById('entryModal').style.display = 'flex';
+            }
+        });
+
+        const socialMediaBackgroundFeed = [
+            {
+                source: "Instagram (@istanbul_street_poetry)",
+                text: "The way the light hits the stone of Galata Tower at dusk... you can feel centuries of whispers across the Golden Horn.",
+                citation: "Istanbul Street Poetry (2026) <em>Galata Twilight Reel & Acoustic Log</em>. Instagram [@istanbul_street_poetry] (Accessed: October 13, 2026)."
+            },
+            {
+                source: "Google Reviews (Verified Tourist - Liam M.)",
+                text: "Karaköy waterfront is a brilliant collision of old maritime warehouses and modern design. Great walking path right by the Bosphorus.",
+                citation: "Murphy, L. (2026) <em>Karaköy Waterfront Urban Transformation Visitor Review</em>. Google Maps Local Guides. Available online (Accessed: September 28, 2026)."
+            },
+            {
+                source: "Instagram (@karakoy_diaries)",
+                text: "Drinking Turkish coffee near the pier while watching cargo ships and ferries pass by is the ultimate Istanbul therapy.",
+                citation: "Karaköy Diaries (2026) <em>Portside Reflections & Morning Rituals</em>. Instagram [@karakoy_diaries] (Accessed: October 10, 2026)."
+            },
+            {
+                source: "Google Reviews (Local Architect - Zeynep T.)",
+                text: "Galataport opened up the shoreline to the public after decades of restriction. The layering of public space here is fascinating.",
+                citation: "Taskin, Z. (2026) <em>Istanbul Modern & Waterfront Accessibility Review</em>. Architectural Urban Research Log."
+            },
+            {
+                source: "Instagram (@bosphorus_wanderer)",
+                text: "Climbed the 143 steps of Galata Tower. The 360-degree panoramic view of the peninsula is breathtaking.",
+                citation: "Bosphorus Wanderer (2026) <em>Galata Tower Ascent Story Log</em>. Instagram [@bosphorus_wanderer] (Accessed: October 2, 2026)."
+            },
+            {
+                source: "Google Reviews (Visitor - David S.)",
+                text: "The cobblestone alleyways winding down from Galata toward Karaköy are packed with hidden art galleries and incredible artisan cafes.",
+                citation: "Smith, D. (2026) <em>Galata-Karaköy Walking Axis Visitor Feedback</em>. TripAdvisor Istanbul Archives."
+            }
+        ];
+
+        function renderBackgroundNotifications() {
+            const feedContainer = document.getElementById('bgNotificationFeed');
+            feedContainer.innerHTML = '';
+
+            socialMediaBackgroundFeed.forEach((notif, index) => {
+                const card = document.createElement('div');
+                card.className = 'live-notification-card';
+                
+                const leftPos = 70 + (index * 290);
+                const topPos = 60 + (index * 95) % 420;
+
+                card.style.left = `${leftPos}px`;
+                card.style.top = `${topPos}px`;
+
+                card.innerHTML = `
+                    <div class="notif-source">
+                        <span>💬 Social Log</span>
+                        <span>${notif.source}</span>
+                    </div>
+                    <div>“${notif.text}”</div>
+                    <div class="notif-citation"><strong>Harvard Ref:</strong> ${notif.citation}</div>
+                `;
+                feedContainer.appendChild(card);
+            });
+        }
+
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            document.getElementById('live-clock').innerText = `${hours}:${minutes} ${ampm}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        let souvenirs = [];
+        let pendingFileObj = null;
+        let itemToDeleteId = null;
+
+        function syncBoardPan(value) {
+            const container = document.getElementById('boardContainer');
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            container.scrollLeft = (value / 100) * maxScroll;
+        }
+
+        document.getElementById('boardContainer').addEventListener('scroll', function() {
+            const maxScroll = this.scrollWidth - this.clientWidth;
+            if (maxScroll > 0) {
+                const percentage = (this.scrollLeft / maxScroll) * 100;
+                document.getElementById('boardPanSlider').value = percentage;
+            }
+        });
+
+        function loadSouvenirs() {
+            try {
+                const saved = localStorage.getItem('galata_karakoy_base64_souvenirs');
+                if (saved) {
+                    souvenirs = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error("Could not load stored souvenirs", e);
+            }
+            renderSouvenirs();
+        }
+
+        function handleFileSelected(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            pendingFileObj = file;
+
+            document.getElementById('souvenirComment').value = '';
+            document.getElementById('missingSpace').value = '';
+            document.getElementById('problemsSpace').value = '';
+            document.getElementById('pdfAuthor').value = '';
+            document.getElementById('pdfYear').value = new Date().getFullYear();
+            document.getElementById('pdfTitle').value = file.name.replace('.pdf', '');
+            document.getElementById('pdfPublisher').value = '';
+
+            const isPdf = file.type === 'application/pdf' || file.name.endsWith('.pdf');
+            document.getElementById('harvardFields').style.display = isPdf ? 'block' : 'none';
+
+            document.getElementById('commentModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('commentModal').style.display = 'none';
+            pendingFileObj = null;
+            document.getElementById('fileInput').value = '';
+        }
+
+        function formatHarvardCitation(authors, year, title, publisher) {
+            const a = authors.trim() ? authors.trim() : 'Anon.';
+            const y = year.trim() ? `(${year.trim()})` : `(${new Date().getFullYear()})`;
+            const t = title.trim() ? `<em>${title.trim()}</em>` : '<em>Untitled Document</em>';
+            const p = publisher.trim() ? `, ${publisher.trim()}` : '';
+            return `${a} ${y} ${t}${p}.`;
+        }
+
+        function submitSouvenir() {
+            if (!pendingFileObj) return;
+            const location = document.getElementById('souvenirLocation').value;
+            const comment = document.getElementById('souvenirComment').value.trim() || "Untitled memory";
+            const missing = document.getElementById('missingSpace').value.trim();
+            const problems = document.getElementById('problemsSpace').value.trim();
+            const isPdf = pendingFileObj.type === 'application/pdf' || pendingFileObj.name.endsWith('.pdf');
+            
+            let harvardCitation = '';
+            if (isPdf) {
+                harvardCitation = formatHarvardCitation(
+                    document.getElementById('pdfAuthor').value,
+                    document.getElementById('pdfYear').value,
+                    document.getElementById('pdfTitle').value,
+                    document.getElementById('pdfPublisher').value
+                );
+            }
+
+            // Convert uploaded file into a Base64 data string embedded directly in runtime memory
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                
+                const index = souvenirs.length;
+                const randomLeft = 80 + (index * 290) + Math.floor(Math.random() * 50);
+                const randomTop = 90 + Math.floor(Math.random() * 240);
+                const randomWidth = Math.floor(210 + Math.random() * 100);
+                const randomScale = (0.85 + Math.random() * 0.3).toFixed(2);
+                const randomRotation = (-8 + Math.random() * 16).toFixed(1);
+
+                const newItem = {
+                    id: Date.now(),
+                    name: pendingFileObj.name,
+                    type: pendingFileObj.type || (isPdf ? 'application/pdf' : ''),
+                    data: base64Data, // Base64 embedded format
+                    persona: currentPersona || 'Visitor',
+                    location: location,
+                    comment: comment,
+                    missing: missing,
+                    problems: problems,
+                    harvardCitation: harvardCitation,
+                    date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    left: randomLeft,
+                    top: randomTop,
+                    width: randomWidth,
+                    scale: randomScale,
+                    rotation: randomRotation
+                };
+
+                souvenirs.push(newItem);
+                saveAndRefresh();
+                closeModal();
+            };
+
+            reader.readAsDataURL(pendingFileObj);
+        }
+
+        function saveAndRefresh() {
+            try {
+                localStorage.setItem('galata_karakoy_base64_souvenirs', JSON.stringify(souvenirs));
+            } catch(e) {
+                alert('Storage limit reached. Try uploading smaller media files.');
+            }
+            renderSouvenirs();
+        }
+
+        function triggerPinModal(id) {
+            itemToDeleteId = id;
+            document.getElementById('securityPinInput').value = '';
+            document.getElementById('pinModal').style.display = 'flex';
+            document.getElementById('securityPinInput').focus();
+        }
+
+        function closePinModal() {
+            document.getElementById('pinModal').style.display = 'none';
+            itemToDeleteId = null;
+        }
+
+        function verifyAndDelete() {
+            const enteredPin = document.getElementById('securityPinInput').value.trim();
+            if (enteredPin === '67') {
+                souvenirs = souvenirs.filter(item => item.id !== itemToDeleteId);
+                saveAndRefresh();
+                closePinModal();
+            } else {
+                alert('Incorrect PIN. Who is to say that isn’t one of the multiple dimensions of public space?');
+            }
+        }
+
+        function setupDeleteTriggers(element, item) {
+            element.addEventListener('mouseenter', () => {
+                window.currentHoveredItemId = item.id;
+            });
+            element.addEventListener('mouseleave', () => {
+                if (window.currentHoveredItemId === item.id) {
+                    window.currentHoveredItemId = null;
+                }
+            });
+
+            let pressTimer = null;
+            element.addEventListener('touchstart', (e) => {
+                pressTimer = setTimeout(() => {
+                    triggerPinModal(item.id);
+                }, 600);
+            });
+            element.addEventListener('touchend', () => {
+                clearTimeout(pressTimer);
+            });
+            element.addEventListener('touchmove', () => {
+                clearTimeout(pressTimer);
+            });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'd' && window.currentHoveredItemId) {
+                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+                e.preventDefault();
+                triggerPinModal(window.currentHoveredItemId);
+            }
+        });
+
+        function renderSouvenirs() {
+            const container = document.getElementById('souvenirsContainer');
+            const mainBoard = document.getElementById('mainBoard');
+
+            renderBackgroundNotifications();
+
+            if (souvenirs.length === 0) {
+                mainBoard.style.width = '1800px';
+                container.innerHTML = '<div class="empty-notice">No user souvenirs documented yet. Click the crimson upload button below to begin archiving.</div>';
+                return;
+            }
+
+            const dynamicWidth = Math.max(1800, (souvenirs.length * 320) + 500);
+            mainBoard.style.width = `${dynamicWidth}px`;
+
+            container.innerHTML = '';
+            souvenirs.forEach(item => {
+                const isPdf = item.type === 'application/pdf' || item.name.endsWith('.pdf');
+                const isAudio = item.type.startsWith('audio/');
+                const isVideo = item.type.startsWith('video/');
+                const isImage = item.type.startsWith('image/');
+
+                let feedbackHtml = '';
+                if (item.missing || item.problems) {
+                    feedbackHtml = `<div class="feedback-section-card">`;
+                    if (item.missing) feedbackHtml += `<div><strong>Missing:</strong> ${escapeHtml(item.missing)}</div>`;
+                    if (item.problems) feedbackHtml += `<div style="margin-top:2px;"><strong>Problem:</strong> ${escapeHtml(item.problems)}</div>`;
+                    feedbackHtml += `</div>`;
+                }
+
+                if (isAudio) {
+                    const recorder = document.createElement('div');
+                    recorder.className = 'recorder-node';
+                    recorder.style.left = `${item.left}px`;
+                    recorder.style.top = `${item.top}px`;
+                    recorder.style.setProperty('--item-scale', item.scale || 1);
+                    recorder.style.setProperty('--item-rot', `${item.rotation || 0}deg`);
+                    recorder.style.transform = `scale(${item.scale || 1}) rotate(${item.rotation || 0}deg)`;
+
+                    recorder.innerHTML = `
+                        <div class="recorder-tooltip">“Do you want to play this testimony, you might uncover a history” (Press 'D' or Long-press to delete)</div>
+                        <div style="font-size:0.6rem; font-weight:bold; color:var(--crimson); margin-bottom:2px;">
+                            📍 ${escapeHtml(item.location || 'Galata')} [${escapeHtml(item.persona || 'Visitor')}]
+                        </div>
+                        <div style="font-size:0.7rem; font-weight:bold; color:var(--border-dark); margin-bottom:4px; border-bottom:1px solid #ccc; padding-bottom:3px;">
+                            ⚖️ WITNESS RECORDER
+                        </div>
+                        <div class="recorder-graphic">
+                            <div style="font-size:0.55rem; color:#aaa;">REC ● AUDIO</div>
+                            <audio src="${item.data}" controls style="width: 90%; height: 26px; margin-top:4px;"></audio>
+                        </div>
+                        <div class="polaroid-caption">"${escapeHtml(item.comment)}"</div>
+                        ${feedbackHtml}
+                        <div class="polaroid-meta" style="margin-top:6px;">
+                            <span>${item.date}</span>
+                            <a href="${item.data}" download="${item.name}" style="color:var(--crimson); text-decoration:none; font-weight:bold;">[DOWNLOAD]</a>
+                        </div>
+                    `;
+                    setupDeleteTriggers(recorder, item);
+                    container.appendChild(recorder);
+
+                } else {
+                    const card = document.createElement('div');
+                    card.className = 'polaroid';
+                    
+                    card.style.left = `${item.left}px`;
+                    card.style.top = `${item.top}px`;
+                    card.style.width = `${item.width}px`;
+                    card.style.setProperty('--item-scale', item.scale || 1);
+                    card.style.setProperty('--item-rot', `${item.rotation || 0}deg`);
+                    card.style.transform = `scale(${item.scale || 1}) rotate(${item.rotation || 0}deg)`;
+
+                    let mediaHTML = '';
+                    if (isImage) {
+                        const imgHeight = Math.random() > 0.5 ? '150px' : '210px';
+                        mediaHTML = `<img src="${item.data}" class="polaroid-media" style="height: ${imgHeight};" alt="Souvenir visual">`;
+                    } else if (isVideo) {
+                        mediaHTML = `<video src="${item.data}" autoplay muted loop playsinline controls class="polaroid-media" style="height: 160px;"></video>`;
+                    } else if (isPdf) {
+                        mediaHTML = `
+                            <div class="polaroid-pdf">
+                                <div style="font-weight:bold; font-size:0.7rem; color:var(--crimson); border-bottom:1px solid #ddd; padding-bottom:4px;">
+                                    📄 PDF ARCHIVE DOCUMENT
+                                </div>
+                                <div class="pdf-citation-box">
+                                    <strong>Harvard Ref:</strong><br>${item.harvardCitation || formatHarvardCitation('', '', item.name, '')}
+                                </div>
+                                <a href="${item.data}" download="${item.name}" class="btn-crimson" style="margin-top:8px; font-size:0.6rem; padding:4px 8px;">
+                                    DOWNLOAD MEMORY
+                                </a>
+                            </div>`;
+                    } else {
+                        mediaHTML = `<a href="${item.data}" download="${item.name}" class="btn-crimson" style="margin: 15px 0; font-size:0.7rem;">DOWNLOAD MEMORY</a>`;
+                    }
+
+                    card.innerHTML = `
+                        <div style="font-size:0.6rem; font-weight:bold; color:var(--crimson); margin-bottom:2px;">
+                            📍 ${escapeHtml(item.location || 'Galata')} [${escapeHtml(item.persona || 'Visitor')}]
+                        </div>
+                        ${mediaHTML}
+                        <div class="polaroid-caption">"${escapeHtml(item.comment)}"</div>
+                        ${feedbackHtml}
+                        <div class="polaroid-meta">
+                            <span>${item.date}</span>
+                            <a href="${item.data}" download="${item.name}" style="color:var(--crimson); text-decoration:none; font-weight:bold;">[DOWNLOAD]</a>
+                        </div>
+                    `;
+                    setupDeleteTriggers(card, item);
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        function copyShareableLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Archive link copied to clipboard!");
+        }
+
+        function triggerUpdateArchive() {
+            window.print();
+        }
+
+        loadSouvenirs();
+    </script>
+
+</body></html>
